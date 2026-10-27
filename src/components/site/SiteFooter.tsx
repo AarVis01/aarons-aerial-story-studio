@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
 import { Instagram } from "lucide-react";
 import { useContent } from "@/lib/use-content";
 import { servicesQuery } from "@/lib/queries";
@@ -35,7 +34,7 @@ export function SiteFooter() {
           <ul className="space-y-3 text-sm">
             {(services ?? []).map((sv: any) => (
               <li key={sv.id}>
-                <Link to="/services/$slug" params={{ slug: sv.slug }} className="text-muted-foreground hover:text-foreground">{sv.title}</Link>
+                <SmartLink href={`/services/${sv.slug}`} className="text-muted-foreground hover:text-foreground">{sv.title}</SmartLink>
               </li>
             ))}
           </ul>
@@ -60,7 +59,7 @@ export function SiteFooter() {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
           <p>© {year} {f.copyrightName ?? s.brandName}. All rights reserved.</p>
-          <Link to="/privacy" className="hover:text-foreground">{f.privacyLabel ?? "Privacy Policy"}</Link>
+          <SmartLink href="/privacy" className="hover:text-foreground">{f.privacyLabel ?? "Privacy Policy"}</SmartLink>
         </div>
       </div>
     </footer>

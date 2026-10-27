@@ -32,7 +32,7 @@ export function SmartLink({ href, className, children, onClick, ...rest }: Props
   }
   const [path, hash] = h.split("#");
   return (
-    <Link to={(path || "/") as "/"} hash={hash} className={className} onClick={onClick} aria-label={rest["aria-label"]}>
+    <Link to={(path || "/") as "/"} {...(hash ? { hash } : {})} className={className} onClick={onClick} aria-label={rest["aria-label"]}>
       {children}
     </Link>
   );
