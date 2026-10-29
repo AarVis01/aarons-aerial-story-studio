@@ -60,15 +60,15 @@ export function EnquiryForm({ f }: { f: any }) {
 
   return (
     <form onSubmit={onSubmit} noValidate className="grid gap-5 md:grid-cols-2">
-      <div><L n="name" req>{f.nameLabel}</L><input id="enq-name" name="name" autoComplete="name" className={field} aria-invalid={!!errors.name} /><Err n="name" /></div>
+      <div><L n="name" req>{f.nameLabel}</L><input id="enq-name" name="name" autoComplete="name" className={field} aria-invalid={!!errors["name"]} /><Err n="name" /></div>
       <div><L n="businessName">{f.businessLabel}</L><input id="enq-businessName" name="businessName" autoComplete="organization" className={field} /></div>
-      <div><L n="email" req>{f.emailLabel}</L><input id="enq-email" name="email" type="email" autoComplete="email" className={field} aria-invalid={!!errors.email} /><Err n="email" /></div>
+      <div><L n="email" req>{f.emailLabel}</L><input id="enq-email" name="email" type="email" autoComplete="email" className={field} aria-invalid={!!errors["email"]} /><Err n="email" /></div>
       <div><L n="phone">{f.phoneLabel}</L><input id="enq-phone" name="phone" type="tel" autoComplete="tel" className={field} /><Err n="phone" /></div>
       <Sel n="service" label={f.serviceLabel} options={f.serviceOptions} />
-      <div><L n="location" req>{f.locationLabel}</L><input id="enq-location" name="location" className={field} aria-invalid={!!errors.location} /><Err n="location" /></div>
+      <div><L n="location" req>{f.locationLabel}</L><input id="enq-location" name="location" className={field} aria-invalid={!!errors["location"]} /><Err n="location" /></div>
       <Sel n="budget" label={f.budgetLabel} options={f.budgetOptions} />
       <Sel n="contactMethod" label={f.contactMethodLabel} options={f.contactMethodOptions} />
-      <div className="md:col-span-2"><L n="details" req>{f.detailsLabel}</L><textarea id="enq-details" name="details" rows={6} className={field} aria-invalid={!!errors.details} /><Err n="details" /></div>
+      <div className="md:col-span-2"><L n="details" req>{f.detailsLabel}</L><textarea id="enq-details" name="details" rows={6} className={field} aria-invalid={!!errors["details"]} /><Err n="details" /></div>
       <div className="absolute -left-[9999px]" aria-hidden><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <div className="md:col-span-2 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="max-w-md text-xs text-muted-foreground">{f.privacyNotice} <SmartLink href="/privacy" className="underline">Privacy Policy</SmartLink></p>

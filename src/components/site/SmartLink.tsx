@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode, MouseEvent } from "react";
 import { isExternal } from "@/lib/media";
 
-type Props = { href?: string | null; className?: string; children: ReactNode; onClick?: () => void; "aria-label"?: string };
+type Props = { href?: string | null | undefined; className?: string; children: ReactNode; onClick?: () => void; "aria-label"?: string };
 
 /** Renders an internal router link, in-page anchor, or external link from a CMS-provided href. */
 export function SmartLink({ href, className, children, onClick, ...rest }: Props) {
