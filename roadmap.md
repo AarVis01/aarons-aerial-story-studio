@@ -10,4 +10,5 @@
 - [x] About, Contact (enquiry form), Privacy pages
 - [ ] Admin sign-in and dashboard (content editor, services, portfolio, media library, settings, SEO, enquiries)
 - [ ] Enquiry email notifications (waiting on: email domain setup)
+- [x] Center hero title, hide header name until scrolled; unique real estate image
 - [ ] End-to-end testing and handover guide
