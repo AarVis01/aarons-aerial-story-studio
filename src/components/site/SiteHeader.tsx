@@ -12,9 +12,10 @@ export function SiteHeader() {
   const pathname = useRouterState({ select: (r) => r.location.pathname });
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => { setScrolled(window.scrollY > 40); setPastHero(window.scrollY > window.innerHeight * 0.6); }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -35,7 +36,7 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 py-4 md:px-8">
-        <BrandLockup settings={s} />
+        <BrandLockup settings={s} className={cn("transition-opacity duration-300", pathname === "/" && !pastHero && !open && "pointer-events-none opacity-0")} />
         <nav aria-label="Main" className="hidden items-center gap-8 lg:flex">
           {nav.map((n, i) => (
             <SmartLink
