@@ -44,19 +44,19 @@ function Index() {
     hero: () => {
       const h = home.hero ?? {};
       return (
-        <section key="hero" className="relative flex min-h-[100svh] items-end overflow-hidden">
+        <section key="hero" className="relative flex min-h-[100svh] items-center overflow-hidden">
           {h.videoUrl ? (
             <video src={h.videoUrl} poster={h.posterUrl} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" aria-hidden />
           ) : (
             h.posterUrl && <img src={h.posterUrl} alt={h.posterAlt ?? ""} className="absolute inset-0 h-full w-full object-cover" />
           )}
           <div className="hero-overlay absolute inset-0" />
-          <div className="relative mx-auto w-full max-w-7xl px-5 pb-24 md:px-8 md:pb-28">
+          <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-28 text-center md:px-8">
             <p className="font-wide text-base font-semibold uppercase tracking-[0.3em] md:text-lg">{s.brandName}</p>
             <p className="mt-3 text-sm text-silver md:text-base">{s.subtitle}</p>
-            <h1 className="mt-10 max-w-4xl text-5xl font-bold leading-[1.02] md:text-8xl">{h.headline}</h1>
-            <p className="mt-6 max-w-xl text-base text-muted-foreground md:text-lg">{h.supportingText}</p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <h1 className="mt-10 max-w-4xl mx-auto text-5xl font-bold leading-[1.02] md:text-8xl">{h.headline}</h1>
+            <p className="mt-6 mx-auto max-w-xl text-base text-muted-foreground md:text-lg">{h.supportingText}</p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Btn href={h.primaryButtonHref}>{h.primaryButtonLabel}</Btn>
               <Btn href={h.secondaryButtonHref} variant="outline">{h.secondaryButtonLabel}</Btn>
             </div>
