@@ -5,6 +5,7 @@ import { contentQuery, projectsQuery, servicesQuery } from "@/lib/queries";
 import { useContent } from "@/lib/use-content";
 import { Btn, Paragraphs, ProjectCard, SectionHead, ServiceCard } from "@/components/site/Blocks";
 import { Reveal } from "@/components/site/Reveal";
+import { FlyingDrone } from "@/components/site/FlyingDrone";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const Route = createFileRoute("/")({
@@ -52,6 +53,7 @@ function Index() {
           )}
           <div className="hero-overlay absolute inset-0" />
           <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-28 text-center md:px-8">
+            <FlyingDrone />
             <p className="font-wide text-base font-semibold uppercase tracking-[0.3em] md:text-lg">{s.brandName}</p>
             <p className="mt-3 text-sm text-silver md:text-base">{s.subtitle}</p>
             <h1 className="mt-10 max-w-4xl mx-auto text-5xl font-bold leading-[1.02] md:text-8xl">{h.headline}</h1>
