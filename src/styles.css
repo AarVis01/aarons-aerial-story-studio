@@ -37,6 +37,7 @@
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
   --color-silver: var(--silver);
+  --color-ember: var(--ember);
   --color-midnight: var(--midnight);
   --color-charcoal: var(--charcoal);
   --color-chart-1: var(--chart-1);
@@ -60,6 +61,7 @@
   --charcoal: oklch(0.225 0.009 265);
   --offwhite: oklch(0.968 0.002 106);
   --silver: oklch(0.76 0.015 260);
+  --ember: oklch(0.68 0.17 50);
 
   --background: var(--midnight);
   --foreground: var(--offwhite);
@@ -153,3 +155,9 @@
     transform: none;
   }
 }
+
+@keyframes prop-spin { to { transform: rotate(360deg); } }
+.prop-spin { transform-box: fill-box; transform-origin: center; animation: prop-spin 0.12s linear infinite; }
+@keyframes drone-bob { 50% { transform: translateY(-4px); } }
+.drone-bob { animation: drone-bob 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .prop-spin { animation-duration: 1.2s; } .drone-bob { animation: none; } }
