@@ -34,7 +34,6 @@ function ProjectPage() {
       <PageHero eyebrow={p.category?.name} heading={p.title} text={p.short_description} image={p.thumbnail_url} alt={p.thumbnail_alt} />
       <section className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-12 md:px-8">
         <div className="md:col-span-8">
-          {p.is_placeholder && <p className="mb-6 rounded-sm border border-border bg-card p-4 text-sm text-muted-foreground">This is a sample project with placeholder images. It will be replaced with real work.</p>}
           <Paragraphs text={p.full_description} className="text-lg leading-relaxed text-muted-foreground" />
         </div>
         <dl className="space-y-5 text-sm md:col-span-4">
