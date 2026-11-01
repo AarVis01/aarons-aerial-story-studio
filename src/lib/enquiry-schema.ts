@@ -14,7 +14,7 @@ export const enquirySchema = z.object({
   service: z.string().trim().max(160).optional().default(""),
   location: z.string().trim().min(1, "Please enter the project location").max(200),
   budget: z.string().trim().max(80).optional().default(""),
-  details: z.string().trim().min(10, "Please tell us a little more (at least 10 characters)").max(5000),
+  details: z.string().trim().min(10, "Please tell me a little more (at least 10 characters)").max(5000),
   contactMethod: z.string().trim().max(40).optional().default(""),
   // spam protection
   website: z.string().max(200).optional().default(""),

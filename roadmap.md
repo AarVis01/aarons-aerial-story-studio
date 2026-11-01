@@ -12,3 +12,4 @@
 - [ ] Enquiry email notifications (waiting on: email domain setup)
 - [x] Center hero title, hide header name until scrolled; unique real estate image
 - [ ] End-to-end testing and handover guide
+- [x] Wording: we→I, subtitle capitals, headline full stop, single ground-to-sky
