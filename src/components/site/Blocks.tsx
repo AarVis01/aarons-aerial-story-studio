@@ -95,7 +95,6 @@ export function ProjectCard({ p, index, large }: { p: any; index: number; large?
         <div className={cn("relative overflow-hidden", large ? "aspect-[16/10]" : "aspect-[4/5]")}>
           {p.thumbnail_url && <img src={p.thumbnail_url} alt={p.thumbnail_alt ?? ""} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />}
           <div className="hero-overlay absolute inset-0" />
-          {p.is_placeholder && <span className="absolute right-3 top-3 rounded-sm bg-background/80 px-2 py-1 text-[10px] uppercase tracking-widest text-muted-foreground">Sample</span>}
           <div className="absolute inset-x-0 bottom-0 p-6">
             {p.category?.name && <p className="eyebrow mb-2">{p.category.name}</p>}
             <h3 className="text-xl font-semibold">{p.title}</h3>
