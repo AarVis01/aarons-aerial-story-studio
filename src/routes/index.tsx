@@ -101,19 +101,22 @@ function Index() {
         </section>
       );
     },
-    portfolio: () => {
-      const x = home.portfolio ?? {};
-      if (!featured.length) return null;
+    editing: () => {
+      const x = home.editing ?? {};
       return (
-        <section key="portfolio" id="portfolio" className="border-t border-border bg-card/40 py-24 md:py-32">
+        <section key="editing" id="editing" className="border-t border-border bg-card/40 py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
-            <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-              <SectionHead eyebrow={x.eyebrow} heading={x.heading} text={x.text} />
-              <Btn href={x.buttonHref} variant="outline">{x.buttonLabel}</Btn>
+            <SectionHead eyebrow={x.eyebrow} heading={x.heading} text={x.text} />
+            <Paragraphs text={x.body} className="mt-12 max-w-3xl text-muted-foreground" />
+            <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              {(x.highlights ?? []).map((hl: any, i: number) => (
+                <Reveal key={i} delay={i * 80} className="border-t border-foreground/30 pt-6">
+                  <h3 className="text-lg font-semibold">{hl.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{hl.text}</p>
+                </Reveal>
+              ))}
             </div>
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {featured.map((p, i) => <ProjectCard key={p.id} p={p} index={i} />)}
-            </div>
+            <div className="mt-12"><Btn href={x.buttonHref} variant="outline">{x.buttonLabel}</Btn></div>
           </div>
         </section>
       );
