@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
-import { contentQuery, projectsQuery, servicesQuery } from "@/lib/queries";
+import { contentQuery, servicesQuery } from "@/lib/queries";
 import { useContent } from "@/lib/use-content";
-import { Btn, Paragraphs, ProjectCard, SectionHead, ServiceCard } from "@/components/site/Blocks";
+import { Btn, Paragraphs, SectionHead, ServiceCard } from "@/components/site/Blocks";
 import { Reveal } from "@/components/site/Reveal";
 import { FlyingDrone } from "@/components/site/FlyingDrone";
 
@@ -13,7 +13,6 @@ export const Route = createFileRoute("/")({
     Promise.all([
       context.queryClient.ensureQueryData(contentQuery),
       context.queryClient.ensureQueryData(servicesQuery),
-      context.queryClient.ensureQueryData(projectsQuery),
     ]).then(([c]) => c),
   head: ({ loaderData }) => {
     const seo = (loaderData as any)?.home?.seo ?? {};
@@ -37,8 +36,6 @@ function Index() {
   const s = useContent("settings");
   const home = useContent("home");
   const { data: services } = useSuspenseQuery(servicesQuery);
-  const { data: projects } = useSuspenseQuery(projectsQuery);
-  const featured = (projects as any[]).filter((p) => p.featured).sort((a, b) => a.featured_order - b.featured_order).slice(0, 6);
   const order: any[] = home.sections ?? [];
 
   const blocks: Record<string, () => React.ReactNode> = {
@@ -101,19 +98,22 @@ function Index() {
         </section>
       );
     },
-    portfolio: () => {
-      const x = home.portfolio ?? {};
-      if (!featured.length) return null;
+    editing: () => {
+      const x = home.editing ?? {};
       return (
-        <section key="portfolio" id="portfolio" className="border-t border-border bg-card/40 py-24 md:py-32">
+        <section key="editing" id="editing" className="border-t border-border bg-card/40 py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
-            <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-              <SectionHead eyebrow={x.eyebrow} heading={x.heading} text={x.text} />
-              <Btn href={x.buttonHref} variant="outline">{x.buttonLabel}</Btn>
+            <SectionHead eyebrow={x.eyebrow} heading={x.heading} text={x.text} />
+            <Paragraphs text={x.body} className="mt-12 max-w-3xl text-muted-foreground" />
+            <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              {(x.highlights ?? []).map((hl: any, i: number) => (
+                <Reveal key={i} delay={i * 80} className="border-t border-foreground/30 pt-6">
+                  <h3 className="text-lg font-semibold">{hl.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{hl.text}</p>
+                </Reveal>
+              ))}
             </div>
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {featured.map((p, i) => <ProjectCard key={p.id} p={p} index={i} />)}
-            </div>
+            <div className="mt-12"><Btn href={x.buttonHref} variant="outline">{x.buttonLabel}</Btn></div>
           </div>
         </section>
       );
