@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
-import { contentQuery, projectsQuery, servicesQuery } from "@/lib/queries";
+import { contentQuery, servicesQuery } from "@/lib/queries";
 import { useContent } from "@/lib/use-content";
-import { Btn, Paragraphs, ProjectCard, SectionHead, ServiceCard } from "@/components/site/Blocks";
+import { Btn, Paragraphs, SectionHead, ServiceCard } from "@/components/site/Blocks";
 import { Reveal } from "@/components/site/Reveal";
 import { FlyingDrone } from "@/components/site/FlyingDrone";
 
@@ -13,7 +13,6 @@ export const Route = createFileRoute("/")({
     Promise.all([
       context.queryClient.ensureQueryData(contentQuery),
       context.queryClient.ensureQueryData(servicesQuery),
-      context.queryClient.ensureQueryData(projectsQuery),
     ]).then(([c]) => c),
   head: ({ loaderData }) => {
     const seo = (loaderData as any)?.home?.seo ?? {};
@@ -37,8 +36,6 @@ function Index() {
   const s = useContent("settings");
   const home = useContent("home");
   const { data: services } = useSuspenseQuery(servicesQuery);
-  const { data: projects } = useSuspenseQuery(projectsQuery);
-  const featured = (projects as any[]).filter((p) => p.featured).sort((a, b) => a.featured_order - b.featured_order).slice(0, 6);
   const order: any[] = home.sections ?? [];
 
   const blocks: Record<string, () => React.ReactNode> = {
