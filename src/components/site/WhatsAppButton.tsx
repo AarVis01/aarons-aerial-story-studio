@@ -1,6 +1,6 @@
 const WHATSAPP_URL =
   "https://wa.me/447354740445?text=" +
-  encodeURIComponent("Welcome to Aarons Visuals helpline, how can i assist you today?");
+  encodeURIComponent("Welcome to Aarons Visuals helpline, how can I assist you today?");
 
 export function WhatsAppButton() {
   return (
