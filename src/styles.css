@@ -38,6 +38,7 @@
   --color-ring-offset-background: var(--background);
   --color-silver: var(--silver);
   --color-ember: var(--ember);
+  --color-whatsapp: var(--whatsapp);
   --color-midnight: var(--midnight);
   --color-charcoal: var(--charcoal);
   --color-chart-1: var(--chart-1);
@@ -62,6 +63,7 @@
   --offwhite: oklch(0.968 0.002 106);
   --silver: oklch(0.76 0.015 260);
   --ember: oklch(0.68 0.17 50);
+  --whatsapp: oklch(0.72 0.19 155);
 
   --background: var(--midnight);
   --foreground: var(--offwhite);

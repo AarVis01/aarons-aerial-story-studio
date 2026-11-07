@@ -11,6 +11,7 @@ import {
 import { Suspense, useEffect, type ReactNode } from "react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
+import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
@@ -126,6 +127,7 @@ function RootComponent() {
       <Suspense fallback={null}><SiteHeader /></Suspense>
       <main id="main"><Outlet /></main>
       <Suspense fallback={null}><SiteFooter /></Suspense>
+      <WhatsAppButton />
       <Toaster />
     </QueryClientProvider>
   );
