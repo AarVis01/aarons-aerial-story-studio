@@ -51,6 +51,8 @@ export type Database = {
           phone: string | null
           service: string | null
           status: string
+          terms_accepted_at: string | null
+          terms_version: string | null
         }
         Insert: {
           budget?: string | null
@@ -67,6 +69,8 @@ export type Database = {
           phone?: string | null
           service?: string | null
           status?: string
+          terms_accepted_at?: string | null
+          terms_version?: string | null
         }
         Update: {
           budget?: string | null
@@ -83,6 +87,8 @@ export type Database = {
           phone?: string | null
           service?: string | null
           status?: string
+          terms_accepted_at?: string | null
+          terms_version?: string | null
         }
         Relationships: []
       }

@@ -39,6 +39,7 @@
   --color-silver: var(--silver);
   --color-ember: var(--ember);
   --color-whatsapp: var(--whatsapp);
+  --color-legal-link: var(--legal-link);
   --color-midnight: var(--midnight);
   --color-charcoal: var(--charcoal);
   --color-chart-1: var(--chart-1);
@@ -64,6 +65,7 @@
   --silver: oklch(0.76 0.015 260);
   --ember: oklch(0.68 0.17 50);
   --whatsapp: oklch(0.72 0.19 155);
+  --legal-link: oklch(0.76 0.14 245);
 
   --background: var(--midnight);
   --foreground: var(--offwhite);

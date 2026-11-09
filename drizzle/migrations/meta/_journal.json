@@ -15,6 +15,13 @@
       "when": 1793098216867,
       "tag": "0001_cms_seed",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794223305956,
+      "tag": "0002_enquiry_terms_acceptance",
+      "breakpoints": true
     }
   ]
 }

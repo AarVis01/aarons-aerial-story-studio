@@ -1,5 +1,7 @@
 # Aarons Visuals roadmap
 
+- [x] Require opening terms, scrolling to the end and accepting before enquiry submission; record consent.
+
 - [x] Backend: database tables, admin role (first account = admin), media storage, starter content
 - [x] Logo, favicon, placeholder photos (clearly labelled)
 - [x] Enquiry saving with validation, spam and rate limits

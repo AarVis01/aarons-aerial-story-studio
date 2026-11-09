@@ -1,0 +1,1 @@
+ALTER TABLE public.enquiries ADD COLUMN terms_version text, ADD COLUMN terms_accepted_at timestamptz; COMMENT ON COLUMN public.enquiries.terms_version IS 'Terms version explicitly accepted before enquiry submission; NULL for legacy enquiries.'; COMMENT ON COLUMN public.enquiries.terms_accepted_at IS 'Server timestamp of accepted terms recorded with the enquiry.';

@@ -2,6 +2,10 @@ import { useRef, useState, type FormEvent } from "react";
 import { submitEnquiry } from "@/lib/enquiry.functions";
 import { enquirySchema } from "@/lib/enquiry-schema";
 import { SmartLink } from "./SmartLink";
+import { Button } from "@/components/ui/button";
+import { TermsAgreement } from "./TermsAgreement";
+import { TERMS_VERSION } from "@/lib/terms";
+import { useServerFn } from "@tanstack/react-start";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const field = "w-full rounded-sm border border-input bg-background px-4 py-3 text-sm outline-none transition-colors focus:border-foreground";
@@ -11,12 +15,20 @@ export function EnquiryForm({ f }: { f: any }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [msg, setMsg] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [termsReadToEnd, setTermsReadToEnd] = useState(false);
+  const sendEnquiry = useServerFn(submitEnquiry);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!termsAccepted || !termsReadToEnd) {
+      setErrors({ termsAccepted: "Please open the Terms & Conditions, read to the end and agree before submitting." });
+      return;
+    }
     const form = e.currentTarget;
     const raw = Object.fromEntries(new FormData(form)) as Record<string, string>;
-    const parsed = enquirySchema.safeParse({ ...raw, startedAt: started.current });
+    const input = { ...raw, startedAt: started.current, termsAccepted, termsReadToEnd, termsVersion: TERMS_VERSION };
+    const parsed = enquirySchema.safeParse(input);
     if (!parsed.success) {
       const errs: Record<string, string> = {};
       for (const i of parsed.error.issues) errs[String(i.path[0])] ??= i.message;
@@ -26,7 +38,7 @@ export function EnquiryForm({ f }: { f: any }) {
     setErrors({});
     setState("sending");
     try {
-      const res = await submitEnquiry({ data: { ...raw, startedAt: started.current } as any });
+      const res = await sendEnquiry({ data: parsed.data });
       if (res.ok) {
         setState("done");
         form.reset();
@@ -70,11 +82,15 @@ export function EnquiryForm({ f }: { f: any }) {
       <Sel n="contactMethod" label={f.contactMethodLabel} options={f.contactMethodOptions} />
       <div className="md:col-span-2"><L n="details" req>{f.detailsLabel}</L><textarea id="enq-details" name="details" rows={6} className={field} aria-invalid={!!errors["details"]} /><Err n="details" /></div>
       <div className="absolute -left-[9999px]" aria-hidden><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
+      <div className="md:col-span-2">
+        <TermsAgreement accepted={termsAccepted} onAcceptedChange={setTermsAccepted} onReadEnd={() => setTermsReadToEnd(true)} />
+        <Err n="termsAccepted" />
+      </div>
       <div className="md:col-span-2 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="max-w-md text-xs text-muted-foreground">{f.privacyNotice} <SmartLink href="/privacy" className="underline">Privacy Policy</SmartLink></p>
-        <button disabled={state === "sending"} className="rounded-sm bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground disabled:opacity-60">
+        <Button type="submit" disabled={state === "sending" || !termsAccepted || !termsReadToEnd} className="h-auto whitespace-normal rounded-sm bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground disabled:opacity-60">
           {state === "sending" ? f.sendingLabel : f.submitLabel}
-        </button>
+        </Button>
       </div>
       {state === "error" && <p role="alert" className="md:col-span-2 text-sm text-destructive">{msg || f.errorMessage}</p>}
     </form>

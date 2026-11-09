@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { TERMS_VERSION } from "./terms";
 
 export const enquirySchema = z.object({
   name: z.string().trim().min(1, "Please enter your name").max(120),
@@ -16,6 +17,9 @@ export const enquirySchema = z.object({
   budget: z.string().trim().max(80).optional().default(""),
   details: z.string().trim().min(10, "Please tell me a little more (at least 10 characters)").max(5000),
   contactMethod: z.string().trim().max(40).optional().default(""),
+  termsAccepted: z.literal(true),
+  termsReadToEnd: z.literal(true),
+  termsVersion: z.literal(TERMS_VERSION),
   // spam protection
   website: z.string().max(200).optional().default(""),
   startedAt: z.number().int().nonnegative(),
