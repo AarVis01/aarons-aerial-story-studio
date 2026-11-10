@@ -69,14 +69,13 @@ export function PageHero({ eyebrow, heading, text, image, alt }: { eyebrow?: str
 
 export function ServiceCard({ s, index }: { s: any; index: number }) {
     const myImages = [
-    "./public/main.jpeg",
-    "./public/commercial.jpeg",
-    "./public/estate.jpeg",
-    "./public/car.jpeg",
-    "./public/chef.jpeg",
-    "./public/events.jpeg",
-    "./public/roof.jpeg"
-
+    "/main.jpeg",
+    "/commercial.jpeg",
+    "/estate.jpeg",
+    "/car.jpeg",
+    "/chef.jpeg",
+    "/events.jpeg",
+    "/roof.jpeg"
 
   
   
