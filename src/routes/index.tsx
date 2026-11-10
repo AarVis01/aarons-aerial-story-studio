@@ -46,7 +46,7 @@ function Index() {
           {h.videoUrl ? (
             <video src={h.videoUrl} poster={h.posterUrl} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" aria-hidden />
           ) : (
-            h.posterUrl && <img src={h.posterUrl} alt={h.posterAlt ?? ""} className="absolute inset-0 h-full w-full object-cover" />
+          h.posterUrl && <img src={"/main.jpeg"} alt={h.posterAlt ?? ""} className="absolute inset-0 h-full w-full object-cover" />
           )}
           <div className="hero-overlay absolute inset-0" />
           <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-28 text-center md:px-8">
