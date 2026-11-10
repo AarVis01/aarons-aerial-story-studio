@@ -69,14 +69,15 @@ export function PageHero({ eyebrow, heading, text, image, alt }: { eyebrow?: str
 
 export function ServiceCard({ s, index }: { s: any; index: number })
 const myImages = [
-  "/main.jpg",
+  "/house.jpg",
   "/commercial.jpg",
   "/estate.jpg",
   "/car.jpg",
   "/chef.jpg",
   "/events.jpg",
   "/roof.jpg",
-  "/house.jpg"
+  "/tour.jpg",
+  "/main.jpg"
   return (
     <Reveal delay={(index % 3) * 80}>
       <SmartLink href={`/services/${s.slug}`} className="group block overflow-hidden rounded-sm border border-border bg-card">
