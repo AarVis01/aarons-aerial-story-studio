@@ -68,14 +68,14 @@ export function PageHero({ eyebrow, heading, text, image, alt }: { eyebrow?: str
   );
 
 export function ServiceCard({ s, index }: { s: any; index: number }) {
-    const myImages = [
-    "/main.jpeg",         // 1. Aerial Filming & Drone Photography (Changed from roof to main)
+  const myImages = [
+    "/main.jpeg",         // 1. Aerial Filming
     "/commercial.jpeg",   // 2. Commercial Videography
-    "/estate.jpeg",       // 3. Real Estate & Property Media
-    "/car.jpeg",          // 4. Sports car in a car park
-    "/chef.jpeg",         // 5. Chef plating food
-    "/events.jpeg",       // 6. Wedding venue / events
-    "/roof.jpeg"          // 7. Roof & Gutter inspections
+    "/estate.jpeg",       // 3. Real Estate
+    "/car.jpeg",          // 4. Sports car
+    "/chef.jpeg",         // 5. Chef plating
+    "/events.jpeg",       // 6. Wedding venue
+    "/roof.jpeg"          // 7. Roof inspections
 
   
   
