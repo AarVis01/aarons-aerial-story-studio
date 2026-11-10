@@ -3,8 +3,6 @@ import { submitEnquiry } from "@/lib/enquiry.functions";
 import { enquirySchema } from "@/lib/enquiry-schema";
 import { SmartLink } from "./SmartLink";
 import { Button } from "@/components/ui/button";
-import { TermsAgreement } from "./TermsAgreement";
-import { TERMS_VERSION } from "@/lib/terms";
 import { useServerFn } from "@tanstack/react-start";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -15,19 +13,13 @@ export function EnquiryForm({ f }: { f: any }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [msg, setMsg] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [termsReadToEnd, setTermsReadToEnd] = useState(false);
   const sendEnquiry = useServerFn(submitEnquiry);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!termsAccepted || !termsReadToEnd) {
-      setErrors({ termsAccepted: "Please open the Terms & Conditions, read to the end and agree before submitting." });
-      return;
-    }
     const form = e.currentTarget;
     const raw = Object.fromEntries(new FormData(form)) as Record<string, string>;
-    const input = { ...raw, startedAt: started.current, termsAccepted, termsReadToEnd, termsVersion: TERMS_VERSION };
+    const input = { ...raw, startedAt: started.current };
     const parsed = enquirySchema.safeParse(input);
     if (!parsed.success) {
       const errs: Record<string, string> = {};
@@ -82,13 +74,9 @@ export function EnquiryForm({ f }: { f: any }) {
       <Sel n="contactMethod" label={f.contactMethodLabel} options={f.contactMethodOptions} />
       <div className="md:col-span-2"><L n="details" req>{f.detailsLabel}</L><textarea id="enq-details" name="details" rows={6} className={field} aria-invalid={!!errors["details"]} /><Err n="details" /></div>
       <div className="absolute -left-[9999px]" aria-hidden><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
-      <div className="md:col-span-2">
-        <TermsAgreement accepted={termsAccepted} onAcceptedChange={setTermsAccepted} onReadEnd={() => setTermsReadToEnd(true)} />
-        <Err n="termsAccepted" />
-      </div>
       <div className="md:col-span-2 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="max-w-md text-xs text-muted-foreground">{f.privacyNotice} <SmartLink href="/privacy" className="underline">Privacy Policy</SmartLink></p>
-        <Button type="submit" disabled={state === "sending" || !termsAccepted || !termsReadToEnd} className="h-auto whitespace-normal rounded-sm bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground disabled:opacity-60">
+        <Button type="submit" disabled={state === "sending"} className="h-auto whitespace-normal rounded-sm bg-primary px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground disabled:opacity-60">
           {state === "sending" ? f.sendingLabel : f.submitLabel}
         </Button>
       </div>

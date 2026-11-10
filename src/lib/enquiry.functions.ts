@@ -44,8 +44,6 @@ export const submitEnquiry = createServerFn({ method: "POST" })
         details: data.details,
         contact_method: data.contactMethod || null,
         ip_hash: ipHash,
-        terms_version: data.termsVersion,
-        terms_accepted_at: new Date().toISOString(),
       })
       .select("id")
       .single();
