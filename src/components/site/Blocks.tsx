@@ -69,13 +69,13 @@ export function PageHero({ eyebrow, heading, text, image, alt }: { eyebrow?: str
 
 export function ServiceCard({ s, index }: { s: any; index: number })
 const myImages = [
-  "/main.jpg"
-  "/commercial.jpg"
-  "/estate.jpg"
-  "/car.jpg"
-  "/chef.jpg"
-  "/events.jpg"
-  "/roof.jpg"
+  "/main.jpg",
+  "/commercial.jpg",
+  "/estate.jpg",
+  "/car.jpg",
+  "/chef.jpg",
+  "/events.jpg",
+  "/roof.jpg",
   "/house.jpg"
   return (
     <Reveal delay={(index % 3) * 80}>
