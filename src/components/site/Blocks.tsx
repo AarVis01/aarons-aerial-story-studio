@@ -69,6 +69,24 @@ export function PageHero({ eyebrow, heading, text, image, alt }: { eyebrow?: str
 }
 
 export function ServiceCard({ s, index }: { s: any; index: number }) {
+  const myImages = [
+    "/roof.jpeg",       // 1. Aerial Filming & Drone Photography
+    "/commercial.jpeg", // 2. Commercial Videography
+    "/estate.jpeg",     // 3. Real Estate & Property Media
+    "/car.jpeg",        // 4. Sports car in a car park
+    "/chef.jpeg",       // 5. Chef plating food
+    "/events.jpeg"      // 6. Wedding venue / events
+    "/roof.jpeg"        // 7. Roof & Gutter inspections
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
   return (
     <Reveal delay={(index % 3) * 80}>
       <SmartLink href={`/services/${s.slug}`} className="group block overflow-hidden rounded-sm border border-border bg-card">
