@@ -46,7 +46,8 @@ function Index() {
           {h.videoUrl ? (
             <video src={h.videoUrl} poster={h.posterUrl} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" aria-hidden />
           ) : (
-          <img src="/main.jpeg" alt={h.posterAlt ?? ""} className="absolute inset-0 h-full w-full object-cover opacity-40" />
+          <img src="/main.jpg" alt={h.posterAlt ?? ""} className="absolute inset-0 h-full w-full object-cover opacity-40" />
+          )}
           <div className="hero-overlay absolute inset-0" />
           <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-28 text-center md:px-8">
             <FlyingDrone />
@@ -132,42 +133,6 @@ function Index() {
               <div className="mt-6"><Btn href={x.buttonHref}>{x.buttonLabel}</Btn></div>
             </Reveal>
           </div>
-       );
-};
-
-const MediaViewer = ({ items, index, onClose, onIndex }: { items: any[]; index: number | null; onClose: () => void; onIndex: (i: number | null) => void }) => {
-  if (index === null) return null;
-  const m = items[index];
-  return (
-    <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
-      <button onClick={onClose} className="absolute top-4 right-4 text-white text-xl">✕</button>
-      <img src={m.url} alt={m.alt ?? ""} className="max-w-full max-h-[85vh] object-contain" />
-    </div>
-  );
-};
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         </section>
       );
     },

@@ -66,8 +66,8 @@ export function PageHero({ eyebrow, heading, text, image, alt }: { eyebrow?: str
       </div>
     </section>
   );
+}
 
-export function ServiceCard({ s, index }: { s: any; index: number })
 const myImages = [
   "/house.jpg",
   "/commercial.jpg",
@@ -75,9 +75,12 @@ const myImages = [
   "/car.jpg",
   "/chef.jpg",
   "/events.jpg",
-  "/roof.jpg",
+  "/roof.jpeg",
   "/tour.jpg",
-  "/main.jpg"
+  "/main.jpg",
+];
+
+export function ServiceCard({ s, index }: { s: any; index: number }) {
   return (
     <Reveal delay={(index % 3) * 80}>
       <SmartLink href={`/services/${s.slug}`} className="group block overflow-hidden rounded-sm border border-border bg-card">

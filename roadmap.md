@@ -11,7 +11,7 @@
 - [x] Services pages, portfolio pages, filters, media viewer
 - [x] About, Contact (enquiry form), Privacy pages
 - [ ] Admin sign-in and dashboard (content editor, services, portfolio, media library, settings, SEO, enquiries)
-- [ ] Enquiry email notifications (waiting on: email domain setup)
+- [ ] Quote/enquiry emails to info@aaronsvisuals.co.uk and the existing secondary recipient (blocked: sender domain needs setup and verification).
 - [x] Center hero title, hide header name until scrolled; unique real estate image
 - [ ] End-to-end testing and handover guide
 - [x] Wording: we→I, subtitle capitals, headline full stop, single ground-to-sky
