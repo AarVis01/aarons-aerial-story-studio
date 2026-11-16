@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeader } from "@tanstack/react-start/server";
 import { enquirySchema } from "./enquiry-schema";
 import { notifyNewEnquiry } from "./notify.server";
+import { BUSINESS_EMAIL } from "./site-contact";
 
 async function sha256(text: string) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
@@ -56,24 +57,24 @@ export const submitEnquiry = createServerFn({ method: "POST" })
     let emailStatus: "sent" | "not_configured" | "failed" = "not_configured";
     try {
       const { data: settings } = await supabaseAdmin.from("site_content").select("published").eq("key", "settings").maybeSingle();
-      const to = ((settings?.published as Record<string, unknown> | null)?.["notificationEmail"] as string | undefined)?.trim();
-      if (to) {
-        emailStatus = await notifyNewEnquiry({
-          to,
-          enquiryId: row.id,
-          enquiry: {
-            name: data.name,
-            businessName: data.businessName,
-            email: data.email,
-            phone: data.phone,
-            service: data.service,
-            location: data.location,
-            budget: data.budget,
-            details: data.details,
-            contactMethod: data.contactMethod,
-          },
-        });
-      }
+      const configured = ((settings?.published as Record<string, unknown> | null)?.["notificationEmail"] as string | undefined)?.trim();
+      // Quote enquiries go to the business inbox unless another address is set in settings.
+      const to = configured || BUSINESS_EMAIL;
+      emailStatus = await notifyNewEnquiry({
+        to,
+        enquiryId: row.id,
+        enquiry: {
+          name: data.name,
+          businessName: data.businessName,
+          email: data.email,
+          phone: data.phone,
+          service: data.service,
+          location: data.location,
+          budget: data.budget,
+          details: data.details,
+          contactMethod: data.contactMethod,
+        },
+      });
     } catch (e) {
       console.error("Enquiry notification failed", e);
       emailStatus = "failed";

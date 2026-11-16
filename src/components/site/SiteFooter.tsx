@@ -3,6 +3,7 @@ import { Instagram } from "lucide-react";
 import { useContent } from "@/lib/use-content";
 import { servicesQuery } from "@/lib/queries";
 import { SmartLink } from "./SmartLink";
+import { BUSINESS_EMAIL, BUSINESS_PHONE, socialLinks, telHref } from "@/lib/site-contact";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function SiteFooter() {
@@ -10,6 +11,8 @@ export function SiteFooter() {
   const { data: services } = useQuery(servicesQuery);
   const f = s.footer ?? {};
   const c = s.contact ?? {};
+  const email: string = c.email || BUSINESS_EMAIL;
+  const phone: string = c.phone || BUSINESS_PHONE;
   const year = new Date().getFullYear();
 
   return (
@@ -42,14 +45,14 @@ export function SiteFooter() {
         <div className="md:col-span-3">
           <p className="eyebrow mb-4">{f.contactHeading}</p>
           <ul className="space-y-3 text-sm text-muted-foreground">
-            {c.email && <li><a className="hover:text-foreground" href={`mailto:${c.email}`}>{c.email}</a></li>}
-            {c.phone && <li><a className="hover:text-foreground" href={`tel:${c.phone.replace(/\s/g, "")}`}>{c.phone}</a></li>}
+            <li><a className="hover:text-foreground" href={`mailto:${email}`}>{email}</a></li>
+            <li><a className="hover:text-foreground" href={telHref(phone)}>{phone}</a></li>
             {c.website && <li><SmartLink className="hover:text-foreground" href={/^https?:/.test(c.website) ? c.website : `https://${c.website}`}>{c.website}</SmartLink></li>}
             {c.serviceArea && <li>{c.serviceArea}</li>}
-            {(s.social ?? []).map((so: any, i: number) => (
+            {socialLinks(s.social).map((so, i) => (
               <li key={i}>
                 <a href={so.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-foreground">
-                  {/instagram/i.test(so.url ?? "") && <Instagram className="h-4 w-4" aria-hidden />} {so.label}
+                  {so.instagram && <Instagram className="h-4 w-4" aria-hidden />} {so.label}
                 </a>
               </li>
             ))}
