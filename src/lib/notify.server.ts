@@ -11,7 +11,7 @@ export async function notifyNewEnquiry(args: {
         Accept: "application/json",
       },
       body: JSON.stringify({
-        access_key: "5e3a4d08-f05e-418b-8272-dea826ca20a3",
+        access_key: "0c90495c-d1c4-4b27-ba0b-880dc5545d39",
         subject: `New Quote Request from ${args.enquiry.name || "Website"}`,
         from_name: "Aaron's Visuals Website",
         replyto: args.enquiry.email,
