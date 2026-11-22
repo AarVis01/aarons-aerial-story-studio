@@ -23,16 +23,21 @@ export function EnquiryForm({ f }: { f: any }) {
     const parsed = enquirySchema.safeParse(input);
     if (!parsed.success) {
       const errs: Record<string, string> = {};
-      for (const i of parsed.error.issues) errs[String(i.path)] ??= i.message;
+      for (const i of parsed.error.issues) errs[String(i.path[0])] ??= i.message;
       setErrors(errs);
       return;
     }
     setErrors({});
     setState("sending");
     try {
-      await sendEnquiry({ data: parsed.data });
-      setState("done");
-      form.reset();
+      const res = await sendEnquiry({ data: parsed.data });
+      if (res?.ok) {
+        setState("done");
+        form.reset();
+      } else {
+        setState("error");
+        setMsg(res?.error || f.errorMessage);
+      }
     } catch {
       setState("error");
       setMsg(f.errorMessage);
