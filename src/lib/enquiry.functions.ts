@@ -12,19 +12,17 @@ async function sha256(text: string) {
 export const submitEnquiry = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => enquirySchema.parse(d))
   .handler(async ({ data }) => {
-    // Honeypot / too-fast submissions are treated as spam.
     if (data.website) return { ok: false as const, error: "Your enquiry could not be sent." };
     if (Date.now() - data.startedAt < 3000) {
       return { ok: false as const, error: "That was very quick — please check your details and try again." };
     }
 
-    const ip = getRequestHeader("cf-connecting-ip") ?? getRequestHeader("x-forwarded-for")?.split(",")[0] ?? "unknown";
+    const ip = getRequestHeader("cf-connecting-ip") ?? getRequestHeader("x-forwarded-for")?.split(",") ?? "unknown";
     const ipHash = await sha256(`av:${ip}`);
 
     let enquiryId = crypto.randomUUID();
     let to = BUSINESS_EMAIL;
 
-    // Try saving to Supabase if configured, without blocking email delivery if unavailable
     try {
       const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
       const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
@@ -55,33 +53,31 @@ export const submitEnquiry = createServerFn({ method: "POST" })
         .select("id")
         .single();
 
-      if (row?.id) enquiryId = row.id;
+      if (row?.id) {
+        enquiryId = row.id;
+        const { data: settings } = await supabaseAdmin.from("site_content").select("published").eq("key", "settings").maybeSingle();
+        const configured = ((settings?.published as Record<string, unknown> | null)?.["notificationEmail"] as string | undefined)?.trim();
+        if (configured) to = configured;
 
-      const { data: settings } = await supabaseAdmin.from("site_content").select("published").eq("key", "settings").maybeSingle();
-      const configured = ((settings?.published as Record<string, unknown> | null)?.["notificationEmail"] as string | undefined)?.trim();
-      if (configured) to = configured;
-    } catch (dbErr) {
-      console.warn("Supabase skipped or unavailable:", dbErr);
-    }
-
-    const emailStatus = await notifyNewEnquiry({
-      to,
-      enquiryId,
-      enquiry: {
-        name: data.name,
-        businessName: data.businessName,
-        email: data.email,
-        phone: data.phone,
-        service: data.service,
-        location: data.location,
-        budget: data.budget,
-        details: data.details,
-        contactMethod: data.contactMethod,
-      },
-    });
-
-    if (emailStatus !== "sent") {
-      return { ok: false as const, error: "Your enquiry could not be sent. Please try again in a moment." };
+        const emailStatus = await notifyNewEnquiry({
+          to,
+          enquiryId,
+          enquiry: {
+            name: data.name,
+            businessName: data.businessName,
+            email: data.email,
+            phone: data.phone,
+            service: data.service,
+            location: data.location,
+            budget: data.budget,
+            details: data.details,
+            contactMethod: data.contactMethod,
+          },
+        });
+        await supabaseAdmin.from("enquiries").update({ email_status: emailStatus }).eq("id", row.id);
+      }
+    } catch (err) {
+      console.error("Enquiry handler warning:", err);
     }
 
     return { ok: true as const };
