@@ -23,7 +23,7 @@ export function EnquiryForm({ f }: { f: any }) {
     const parsed = enquirySchema.safeParse(input);
     if (!parsed.success) {
       const errs: Record<string, string> = {};
-      for (const i of parsed.error.issues) errs[String(i.path[0])] ??= i.message;
+      for (const i of parsed.error.issues) errs[String(i.path)] ??= i.message;
       setErrors(errs);
       return;
     }
