@@ -30,13 +30,43 @@ export function EnquiryForm({ f }: { f: any }) {
     setErrors({});
     setState("sending");
     try {
-      const res = await sendEnquiry({ data: parsed.data });
-      if (res.ok) {
+      // 1. Send email directly via Web3Forms
+      const web3Res = await fetch("https://web3forms.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "5e3a4d08-f05e-418b-8272-dea826ca20a3",
+          subject: `New Quote Request from ${raw.name || "Website"}`,
+          from_name: "Aaron's Visuals Website",
+          name: raw.name,
+          businessName: raw.businessName,
+          email: raw.email,
+          phone: raw.phone,
+          service: raw.service,
+          location: raw.location,
+          budget: raw.budget,
+          contactMethod: raw.contactMethod,
+          details: raw.details,
+        }),
+      });
+      const web3Data = await web3Res.json();
+
+      // 2. Also keep your existing database save running quietly
+      try {
+        await sendEnquiry({ data: parsed.data });
+      } catch {
+        // Ignore database/server errors if email already succeeded
+      }
+
+      if (web3Data.success) {
         setState("done");
         form.reset();
       } else {
         setState("error");
-        setMsg(res.error);
+        setMsg(web3Data.message || f.errorMessage);
       }
     } catch {
       setState("error");
