@@ -23,14 +23,13 @@ export function EnquiryForm({ f }: { f: any }) {
     const parsed = enquirySchema.safeParse(input);
     if (!parsed.success) {
       const errs: Record<string, string> = {};
-      for (const i of parsed.error.issues) errs[String(i.path[0])] ??= i.message;
+      for (const i of parsed.error.issues) errs[String(i.path)] ??= i.message;
       setErrors(errs);
       return;
     }
     setErrors({});
     setState("sending");
     try {
-      // 1. Send email directly via Web3Forms
       const web3Res = await fetch("https://web3forms.com", {
         method: "POST",
         headers: {
@@ -52,9 +51,14 @@ export function EnquiryForm({ f }: { f: any }) {
           details: raw.details,
         }),
       });
-      const web3Data = await web3Res.json();
+      const text = await web3Res.text();
+      let web3Data: any = {};
+      try {
+        web3Data = JSON.parse(text);
+      } catch {
+        throw new Error(`HTTP ${web3Res.status}: ${text.slice(0, 120)}`);
+      }
 
-      // 2. Also keep your existing database save running quietly
       try {
         await sendEnquiry({ data: parsed.data });
       } catch {
@@ -66,11 +70,11 @@ export function EnquiryForm({ f }: { f: any }) {
         form.reset();
       } else {
         setState("error");
-        setMsg(web3Data.message || f.errorMessage);
+        setMsg(`Web3Forms rejected (${web3Res.status}): ${web3Data.message || text.slice(0, 120)}`);
       }
-    } catch {
+    } catch (err) {
       setState("error");
-      setMsg(f.errorMessage);
+      setMsg(`Fetch error: ${err instanceof Error ? err.message : String(err)}`);
     }
   }
 
