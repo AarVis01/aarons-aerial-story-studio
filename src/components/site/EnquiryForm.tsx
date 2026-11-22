@@ -30,51 +30,12 @@ export function EnquiryForm({ f }: { f: any }) {
     setErrors({});
     setState("sending");
     try {
-      const web3Res = await fetch("https://web3forms.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: "5e3a4d08-f05e-418b-8272-dea826ca20a3",
-          subject: `New Quote Request from ${raw.name || "Website"}`,
-          from_name: "Aaron's Visuals Website",
-          name: raw.name,
-          businessName: raw.businessName,
-          email: raw.email,
-          phone: raw.phone,
-          service: raw.service,
-          location: raw.location,
-          budget: raw.budget,
-          contactMethod: raw.contactMethod,
-          details: raw.details,
-        }),
-      });
-      const text = await web3Res.text();
-      let web3Data: any = {};
-      try {
-        web3Data = JSON.parse(text);
-      } catch {
-        throw new Error(`HTTP ${web3Res.status}: ${text.slice(0, 120)}`);
-      }
-
-      try {
-        await sendEnquiry({ data: parsed.data });
-      } catch {
-        // Ignore database/server errors if email already succeeded
-      }
-
-      if (web3Data.success) {
-        setState("done");
-        form.reset();
-      } else {
-        setState("error");
-        setMsg(`Web3Forms rejected (${web3Res.status}): ${web3Data.message || text.slice(0, 120)}`);
-      }
-    } catch (err) {
+      await sendEnquiry({ data: parsed.data });
+      setState("done");
+      form.reset();
+    } catch {
       setState("error");
-      setMsg(`Fetch error: ${err instanceof Error ? err.message : String(err)}`);
+      setMsg(f.errorMessage);
     }
   }
 
