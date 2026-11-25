@@ -85,16 +85,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Aarons Visuals" },
       { name: "description", content: "Cinematic drone filming, aerial photography and commercial videography in North West London." },
       { name: "author", content: "Aarons Visuals" },
+      { property: "og:site_name", content: "Aarons Visuals" },
+      { property: "og:title", content: "Aarons Visuals" },
+      { property: "og:url", content: "https://aaronsvisuals.co.uk" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "icon", href: "/favicon.PNG", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/favicon.PNG" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Manrope:wght@400;500;600;700&display=swap" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Aarons Visuals",
+          url: "https://aaronsvisuals.co.uk",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
