@@ -94,8 +94,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/logo.jpg", type: "image/jpeg" },
-      { rel: "apple-touch-icon", href: "/logo.jpg" },
+      { rel: "icon", href: "/favicon.PNG", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/favicon.PNG" },
       { rel: "preconnect", href: "https://googleapis.com" },
       { rel: "preconnect", href: "https://gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Manrope:wght@400;500;600;700&display=swap" },
@@ -138,7 +138,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:bg-background focus:p-3">Skip to content</a>
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z- focus:bg-background focus:p-3">Skip to content</a>
       <Suspense fallback={null}><SiteHeader /></Suspense>
       <main id="main"><Outlet /></main>
       <Suspense fallback={null}><SiteFooter /></Suspense>
