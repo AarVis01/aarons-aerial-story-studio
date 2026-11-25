@@ -19,7 +19,7 @@ export function SiteFooter() {
     <footer className="border-t border-border bg-card">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 md:grid-cols-12 md:px-8">
         <div className="md:col-span-4">
-          {s.logoUrl && <img src={s.logoUrl} alt={s.logoAlt ?? ""} width={64} height={40} loading="lazy" className="h-10 w-auto" />}
+          <img src="/favicon.PNG" alt={s.logoAlt ?? "Aarons Visuals"} width={64} height={40} loading="lazy" className="h-10 w-auto rounded-sm" />
           <p className="font-wide mt-5 text-base font-semibold uppercase tracking-[0.2em]">{s.brandName}</p>
           <p className="mt-2 text-sm text-silver">{s.subtitle}</p>
           {f.description && <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">{f.description}</p>}
